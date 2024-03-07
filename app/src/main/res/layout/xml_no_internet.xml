@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DFDFDF"
+    android:orientation="vertical"
+    android:id="@+id/linearNoInternet"
+    >
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/icon_wifi_slash"
+        android:layout_gravity="center"
+        android:layout_marginTop="150dp">
+
+    </ImageView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_no_internet"
+        android:textAppearance="@style/Text.Title"
+        android:gravity="center">
+
+    </TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_no_internet_description"
+        android:textAppearance="@style/Text.Normal"
+        android:gravity="center">
+
+    </TextView>
+
+</LinearLayout>
