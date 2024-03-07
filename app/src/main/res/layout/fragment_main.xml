@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
+    android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools">
 
     <include
@@ -13,18 +14,37 @@
         android:layout_height="match_parent"
         android:visibility="gone" />
 
+
+    <SearchView
+        android:id="@+id/searchVIew"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textAppearance="@style/Text.Subtitle"
+        />
+
+    <include
+        android:id="@+id/includeNoResult"
+        layout="@layout/xml_no_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:visibility="gone" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:alpha="0.5">
+
+    </com.google.android.material.divider.MaterialDivider>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
         tools:listitem="@layout/item_product"
-
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewFiltres"
         />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

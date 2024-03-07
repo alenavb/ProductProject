@@ -6,6 +6,8 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.testvkproject.MAIN
 import com.example.testvkproject.R
+import dagger.hilt.android.AndroidEntryPoint
+
 
 class MainActivity : AppCompatActivity() {
     lateinit var navController: NavController

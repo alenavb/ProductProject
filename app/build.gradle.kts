@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -63,8 +64,9 @@ dependencies {
     api("com.squareup.okhttp3:logging-interceptor:3.12.6")
     api("com.squareup.okhttp3:okhttp-urlconnection:3.12.6")
 
-    //paging
-    implementation("androidx.paging:paging-runtime-ktx:3.0.0")
+    //hilt
+    implementation("com.google.dagger:hilt-android:2.44.2")
+    kapt("com.google.dagger:hilt-compiler:2.44.2")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

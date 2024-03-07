@@ -6,9 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
-import androidx.lifecycle.viewmodel.viewModelFactory
-import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.testvkproject.MAIN
@@ -65,6 +62,15 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.MyViewHolder>() {
         val startPosition = listProducts.size
         listProducts = listProducts.plus(newProducts)
         notifyItemRangeInserted(startPosition, newProducts.size)
+    }
+
+    fun submitList(list: List<Product>) {
+        listProducts = list
+        notifyDataSetChanged()
+    }
+
+    fun getList(): List<Product> {
+        return listProducts
     }
 
 

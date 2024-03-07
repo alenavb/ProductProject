@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="190dp"
+    android:layout_width="160dp"
     android:layout_height="wrap_content"
     app:cardCornerRadius="10dp"
     android:backgroundTint="#EFEFEF"
@@ -17,16 +17,16 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewItem"
-            android:layout_width="190dp"
-            android:layout_height="190dp"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
             android:backgroundTint="#A6A4A4"
             app:cardCornerRadius="10dp"
             tools:ignore="MissingConstraints">
 
             <ImageView
                 android:id="@+id/imageItem"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
                 android:scaleType="centerCrop"
                 >
 
@@ -61,7 +61,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonNext"
-            android:layout_width="170dp"
+            android:layout_width="140dp"
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:backgroundTint="@color/white"

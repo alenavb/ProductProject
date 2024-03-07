@@ -3,6 +3,7 @@ package com.example.testvkproject.data.remote
 import com.example.testvkproject.domain.ModelProduct
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RemoteApi {
@@ -11,4 +12,7 @@ interface RemoteApi {
         @Query("skip") skip: Int,
         @Query("limit") limit: Int
     ): Response<ModelProduct>
+
+    @GET("products/search")
+    suspend fun searchByTitle(@Query("q") query: String): Response<ModelProduct>
 }

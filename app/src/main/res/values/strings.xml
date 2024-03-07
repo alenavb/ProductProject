@@ -4,6 +4,10 @@
     <!--fragment_main-->
     <string name="tv_no_internet">Нет подключения к интернету</string>
     <string name="tv_no_internet_description">Подключитесь к интернету и попробуйте снова</string>
+    <string name="tv_search">введите название товара</string>
+    <string name="tv_no_result">Ничего не найдено</string>
+    <string name="tv_no_result_description">Попробуйте ввести другое название</string>
+
 
     <!--item_product-->
     <string name="tv_subscribe">Подробнее</string>
@@ -11,4 +15,7 @@
     <!--detailed_fragment-->
     <string name="tv_description">Описание</string>
     <string name="tv_price">Стоимость</string>
+
+    <!--bottom_sheet-->
+    <string name="tv_add">Применить</string>
 </resources>
