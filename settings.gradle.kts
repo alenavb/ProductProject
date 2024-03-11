@@ -15,4 +15,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "TestVKProject"
 include(":app")
+
+
  

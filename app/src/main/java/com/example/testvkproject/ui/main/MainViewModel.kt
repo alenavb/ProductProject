@@ -8,9 +8,12 @@ import com.example.testvkproject.data.remote.RetrofitInstance
 import com.example.testvkproject.data.repository.ProductRepository
 import com.example.testvkproject.data.repository.ProductsRepositoryImpl
 import com.example.testvkproject.domain.ModelProduct
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.launch
 import retrofit2.Response
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+class MainViewModel @AssistedInject constructor(application: Application)
+    : AndroidViewModel(application) {
     private val repo: ProductRepository
     val myProducts: MutableLiveData<Response<ModelProduct>> = MutableLiveData()
     val myProductSearch: MutableLiveData<Response<ModelProduct>> = MutableLiveData()
@@ -33,5 +36,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             myProductSearch.value = repo.searchByTitle(query)
         }
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(): MainViewModel
     }
 }
