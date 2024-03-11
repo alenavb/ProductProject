@@ -11,6 +11,7 @@ import com.example.testvkproject.MAIN
 import com.example.testvkproject.R
 import com.example.testvkproject.databinding.FragmentDetailsBinding
 import com.example.testvkproject.domain.Product
+import com.example.testvkproject.ui.utils.appComponent
 
 class DetailsFragment : Fragment(R.layout.fragment_details) {
 
@@ -30,6 +31,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+    }
+
+    fun inject() {
+        requireContext().appComponent().inject(this)
     }
 
     private fun init() {

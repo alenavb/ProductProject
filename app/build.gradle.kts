@@ -31,6 +31,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -64,9 +65,12 @@ dependencies {
     api("com.squareup.okhttp3:logging-interceptor:3.12.6")
     api("com.squareup.okhttp3:okhttp-urlconnection:3.12.6")
 
-    //hilt
-    implementation("com.google.dagger:hilt-android:2.44.2")
-    kapt("com.google.dagger:hilt-compiler:2.44.2")
+    //dagger
+    implementation("com.google.dagger:dagger:2.51")
+    kapt("com.google.dagger:dagger-compiler:2.51")
+
+    implementation("javax.annotation:javax.annotation-api:1.3.2")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.0")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
