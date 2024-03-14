@@ -7,11 +7,8 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RemoteApi {
-    @GET("products")
-    suspend fun getAllProduct(
-        @Query("skip") skip: Int,
-        @Query("limit") limit: Int
-    ): Response<ModelProduct>
+    @GET("product")
+    suspend fun getAllProduct(@Query("skip") skip: Int, @Query("limit") limit: Int = 20): Response<ModelProduct>
 
     @GET("products/search")
     suspend fun searchByTitle(@Query("q") query: String): Response<ModelProduct>
