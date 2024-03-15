@@ -15,6 +15,10 @@ class ProductsRepositoryImpl @Inject constructor(private val api: RemoteApi) : P
         return api.getAllProduct(skip, limit)
     }
 
+    override suspend fun searchByTitle(query: String): Response<ModelProduct> {
+        return api.searchByTitle(query)
+    }
+
 }
 
 

@@ -18,6 +18,7 @@ import com.example.testvkproject.databinding.FragmentMainBinding
 import com.example.testvkproject.domain.Product
 import com.example.testvkproject.ui.utils.appComponent
 import com.example.testvkproject.ui.main.adapter.MainAdapter
+import com.example.testvkproject.ui.main.adapter.SearchAdapter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -26,6 +27,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private lateinit var mBind: FragmentMainBinding
     lateinit var adapter : MainAdapter
+    lateinit var searchAdapter : SearchAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,48 +36,82 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     ): View {
         mBind = FragmentMainBinding.inflate(layoutInflater, container, false)
         return mBind.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBind = FragmentMainBinding.bind(view)
+        adapter = MainAdapter()
+        searchAdapter = SearchAdapter()
         setupRecyclerView()
         observeProducts()
 
         adapter.addLoadStateListener { loadState ->
-            val errorState = loadState.refresh as? LoadState.Error
-            if (errorState?.error is Resources.NotFoundException) {
-                mBind.includeNoSignal.linearNoInternet.isVisible = true
-                mBind.recyclerView.isVisible = false
-            } else {
-                mBind.includeNoSignal.linearNoInternet.isVisible = false
-                mBind.recyclerView.isVisible = loadState.source.refresh is LoadState.NotLoading
-            }
-
+            mBind.includeNoSignal.linearNoInternet.isVisible = loadState.refresh is LoadState.Error
+            mBind.recyclerView.isVisible = loadState.source.refresh is LoadState.NotLoading
             mBind.prgBarMovies.isVisible = loadState.source.refresh is LoadState.Loading
         }
 
+        mBind.searchVIew.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (!query.isNullOrEmpty()) {
+                    loadProducts(query)
+                    return true
+                }
+                return false
+            }
 
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+
+        mBind.searchVIew.setOnCloseListener {
+            mBind.includeNoResult.linearNoResult.visibility = View.GONE
+            mBind.searchVIew.setQuery("", false)
+            setupRecyclerView()
+            observeProducts()
+            false
+        }
     }
 
+    private fun loadProducts(query: String) {
+        val viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel.searchProducts(query)
+        viewModel.myProductSearch.observe(viewLifecycleOwner) { response ->
+            if (response.isSuccessful) {
+                val products = response.body()?.products ?: emptyList()
+                if (products.isEmpty()) {
+                    mBind.includeNoResult.linearNoResult.visibility = View.VISIBLE
+                } else {
+                    mBind.includeNoResult.linearNoResult.visibility = View.GONE
+                    setupRecyclerViewSearchProducts()
+                    searchAdapter.submitList(products)
+                }
+            } else {
+                mBind.includeNoResult.linearNoResult.visibility = View.VISIBLE
+            }
+        }
+    }
 
     private fun setupRecyclerView() {
-            adapter = MainAdapter()
-            mBind.recyclerView.adapter = adapter
-            mBind.recyclerView.layoutManager = GridLayoutManager(context, 2)
+        mBind.recyclerView.adapter = adapter
+        mBind.recyclerView.layoutManager = GridLayoutManager(context, 2)
+    }
 
+    private fun setupRecyclerViewSearchProducts() {
+        mBind.recyclerView.adapter = searchAdapter
+        mBind.recyclerView.layoutManager = GridLayoutManager(context, 2)
     }
 
     private fun observeProducts() {
-        val viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        val viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.productsList.collectLatest { pagingData ->
                 adapter.submitData(pagingData)
             }
         }
     }
-
 
     fun inject() {
         requireContext().appComponent().inject(this)

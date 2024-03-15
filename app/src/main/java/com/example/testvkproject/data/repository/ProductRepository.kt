@@ -11,5 +11,7 @@ interface ProductRepository {
         limit: Int
     ): Response<ModelProduct>
 
+    suspend fun searchByTitle(query: String) : Response<ModelProduct>
+
 }
 
