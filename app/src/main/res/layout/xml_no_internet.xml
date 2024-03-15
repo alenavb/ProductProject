@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tool="http://schemas.android.com/apk/res-auto"
     android:background="#DFDFDF"
     android:orientation="vertical"
-    android:id="@+id/linearNoInternet"
-    >
+    android:id="@+id/linearNoInternet">
 
     <ImageView
+        android:id="@+id/ivNoInternet"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:src="@drawable/icon_wifi_slash"

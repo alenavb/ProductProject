@@ -14,14 +14,6 @@
         android:layout_height="match_parent"
         android:visibility="gone" />
 
-
-    <SearchView
-        android:id="@+id/searchVIew"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:textAppearance="@style/Text.Subtitle"
-        />
-
     <include
         android:id="@+id/includeNoResult"
         layout="@layout/xml_no_result"
@@ -36,6 +28,12 @@
         android:alpha="0.5">
 
     </com.google.android.material.divider.MaterialDivider>
+
+    <ProgressBar
+        android:id="@+id/prgBarMovies"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 
     <androidx.recyclerview.widget.RecyclerView

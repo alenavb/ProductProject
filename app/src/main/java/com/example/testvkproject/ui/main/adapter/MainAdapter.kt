@@ -1,78 +1,79 @@
 package com.example.testvkproject.ui.main.adapter
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
+import androidx.paging.LoadState
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.testvkproject.MAIN
 import com.example.testvkproject.R
+import com.example.testvkproject.databinding.ItemProductBinding
 import com.example.testvkproject.domain.Product
 import com.example.testvkproject.ui.main.MainFragment
 
-class MainAdapter : RecyclerView.Adapter<MainAdapter.MyViewHolder>() {
+class MainAdapter
+    : PagingDataAdapter<Product, MainAdapter.ViewHolder>(differCallback) {
 
+    companion object {
+        val differCallback = object : DiffUtil.ItemCallback<Product>() {
+            override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
+                return oldItem.id == oldItem.id
+            }
 
-    private var listProducts = emptyList<Product>()
-
-    class MyViewHolder(view: View): RecyclerView.ViewHolder(view){
-        val tvName = view.findViewById<TextView>(R.id.tvName)
-        val tvDescriptionItem = view.findViewById<TextView>(R.id.tvDescriptionItem)
-        val buttonNext = view.findViewById<AppCompatButton>(R.id.buttonNext)
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false)
-        return MyViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
-        Glide.with(MAIN)
-            .load(listProducts[position].thumbnail)
-            .placeholder(R.drawable.ic_launcher_background)
-            .into(holder.itemView.findViewById(R.id.imageItem))
-
-        holder.tvName.apply {
-            text = listProducts[position].title
-            ellipsize = TextUtils.TruncateAt.END
-            maxLines = 1
-        }
-
-        holder.tvDescriptionItem.apply {
-            text = listProducts[position].description
-            ellipsize = TextUtils.TruncateAt.END
-            maxLines = 2
-        }
-
-        holder.buttonNext.setOnClickListener {
-            MainFragment.clickProduct(listProducts[position])
+            override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
+                return oldItem == newItem
+            }
         }
     }
 
-    override fun getItemCount(): Int {
-        return listProducts.size
+    override fun onBindViewHolder(holder: MainAdapter.ViewHolder, position: Int) {
+        holder.bind(getItem(position)!!)
+        holder.setIsRecyclable(false)
+
     }
 
-
-    fun addProducts(newProducts: List<Product>) {
-        val startPosition = listProducts.size
-        listProducts = listProducts.plus(newProducts)
-        notifyItemRangeInserted(startPosition, newProducts.size)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainAdapter.ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemProductBinding.inflate(inflater, parent, false)
+        return ViewHolder(binding)
     }
 
-    fun submitList(list: List<Product>) {
-        listProducts = list
-        notifyDataSetChanged()
+    inner class ViewHolder(private val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.buttonNext.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val product = getItem(position)
+                    product?.let { MainFragment.clickProduct(it) }
+                }
+            }
+        }
+
+        fun bind(item: Product) {
+            binding.apply {
+                tvName.text = item.title
+                tvName.ellipsize = TextUtils.TruncateAt.END
+                tvName.maxLines = 1
+
+                tvDescriptionItem.text = item.description
+                tvDescriptionItem.ellipsize = TextUtils.TruncateAt.END
+                tvDescriptionItem.maxLines = 2
+
+                Glide.with(itemView.context)
+                    .load(item.thumbnail)
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .into(imageItem)
+            }
+        }
     }
-
-    fun getList(): List<Product> {
-        return listProducts
-    }
-
-
 
 }
