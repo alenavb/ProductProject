@@ -1,12 +1,16 @@
 package com.example.testvkproject.ui.main
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.testvkproject.MAIN
 import com.example.testvkproject.R
@@ -23,8 +27,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private lateinit var mBind: FragmentMainBinding
     lateinit var adapter : MainAdapter
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,12 +42,29 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         mBind = FragmentMainBinding.bind(view)
         setupRecyclerView()
         observeProducts()
+
+        adapter.addLoadStateListener { loadState ->
+            val errorState = loadState.refresh as? LoadState.Error
+            if (errorState?.error is Resources.NotFoundException) {
+                mBind.includeNoSignal.linearNoInternet.isVisible = true
+                mBind.recyclerView.isVisible = false
+            } else {
+                mBind.includeNoSignal.linearNoInternet.isVisible = false
+                mBind.recyclerView.isVisible = loadState.source.refresh is LoadState.NotLoading
+            }
+
+            mBind.prgBarMovies.isVisible = loadState.source.refresh is LoadState.Loading
+        }
+
+
     }
 
+
     private fun setupRecyclerView() {
-        adapter = MainAdapter()
-        mBind.recyclerView.adapter = adapter
-        mBind.recyclerView.layoutManager = GridLayoutManager(context, 2)
+            adapter = MainAdapter()
+            mBind.recyclerView.adapter = adapter
+            mBind.recyclerView.layoutManager = GridLayoutManager(context, 2)
+
     }
 
     private fun observeProducts() {
@@ -55,8 +74,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 adapter.submitData(pagingData)
             }
         }
-
     }
+
 
     fun inject() {
         requireContext().appComponent().inject(this)
