@@ -10,17 +10,6 @@
 
 <table>
   <tr>
-    <td><b>Поиск по названию товара</b></td>
-    <td><b>Поиск, если товар не найден</b></td>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/avbolotova/TestVKProject/blob/master/app/src/main/res/drawable/search.gif" width="300"></td>
-    <td><img src="https://github.com/avbolotova/TestVKProject/blob/master/app/src/main/res/drawable/search_error.gif" width="300"></td>
-  </tr>
-</table>
-
-<table>
-  <tr>
     <td><b>Реализация экрана детальной <br>информации</b></td>
     <td><b>Реализация экрана, в случае <br>отсутствия сети или ошибки</b></td>
   </tr>
