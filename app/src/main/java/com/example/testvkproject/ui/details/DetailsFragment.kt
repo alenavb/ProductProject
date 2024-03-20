@@ -1,17 +1,20 @@
 package com.example.testvkproject.ui.details
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import appComponent
 import com.bumptech.glide.Glide
+import com.example.testvkproject.App
 import com.example.testvkproject.MAIN
 import com.example.testvkproject.R
 import com.example.testvkproject.databinding.FragmentDetailsBinding
 import com.example.testvkproject.domain.Product
-import com.example.testvkproject.ui.utils.appComponent
+
 
 class DetailsFragment : Fragment(R.layout.fragment_details) {
 
@@ -31,6 +34,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+        inject()
     }
 
     fun inject() {

@@ -1,17 +1,18 @@
 package com.example.testvkproject.data.repository
 
 import com.example.testvkproject.domain.ModelProduct
+import io.reactivex.rxjava3.core.Observable
 import retrofit2.Response
 import retrofit2.http.Path
 
 
 interface ProductRepository {
-    suspend fun getAllProducts(
+    fun getAllProducts(
         skip: Int,
         limit: Int
-    ): Response<ModelProduct>
+    ): Observable<Response<ModelProduct>>
 
-    suspend fun searchByTitle(query: String) : Response<ModelProduct>
+    fun searchByTitle(query: String) : Observable<Response<ModelProduct>>
 
 }
 

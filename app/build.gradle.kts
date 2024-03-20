@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("androidx.navigation.safeargs")
 }
 
 android {
@@ -56,12 +57,13 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.1")
 
     // Navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:2.5.0")
-    implementation("androidx.navigation:navigation-ui-ktx:2.5.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
+    implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
 
     //retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
     api("com.squareup.okhttp3:logging-interceptor:3.12.6")
     api("com.squareup.okhttp3:okhttp-urlconnection:3.12.6")
 
@@ -69,8 +71,9 @@ dependencies {
     implementation("com.google.dagger:dagger:2.51")
     kapt("com.google.dagger:dagger-compiler:2.51")
 
-    //paging
-    implementation("androidx.paging:paging-runtime-ktx:3.1.0")
+    // RxJava
+    implementation("io.reactivex.rxjava3:rxjava:3.0.0")
+    implementation("io.reactivex.rxjava3:rxandroid:3.0.0")
 
     implementation("javax.annotation:javax.annotation-api:1.3.2")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.0")

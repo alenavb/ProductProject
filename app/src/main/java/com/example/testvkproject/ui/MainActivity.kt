@@ -4,9 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import appComponent
 import com.example.testvkproject.MAIN
 import com.example.testvkproject.R
-import com.example.testvkproject.ui.utils.appComponent
+
 
 
 class MainActivity : AppCompatActivity() {

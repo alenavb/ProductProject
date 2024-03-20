@@ -1,4 +1,4 @@
-package com.example.testvkproject.di
+package com.example.testvkproject.di.modules
 
 import com.example.testvkproject.data.repository.ProductRepository
 import com.example.testvkproject.data.repository.ProductsRepositoryImpl
@@ -6,8 +6,7 @@ import dagger.Binds
 import dagger.Module
 
 @Module
-interface AppBindsModule {
-
+abstract class AppBindsModule {
     @Binds
-    fun bindProductRepository(repositoryImpl: ProductsRepositoryImpl): ProductRepository
+    abstract fun bindProductRepository(repo: ProductsRepositoryImpl): ProductRepository
 }

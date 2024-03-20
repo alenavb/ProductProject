@@ -1,63 +1,41 @@
 package com.example.testvkproject.ui.main.adapter
 
-import android.annotation.SuppressLint
-import android.content.Context
+
 import android.text.TextUtils
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.widget.AppCompatButton
-import androidx.paging.LoadState
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.testvkproject.MAIN
 import com.example.testvkproject.R
 import com.example.testvkproject.databinding.ItemProductBinding
 import com.example.testvkproject.domain.Product
 import com.example.testvkproject.ui.main.MainFragment
 
-class MainAdapter
-    : PagingDataAdapter<Product, MainAdapter.ViewHolder>(differCallback) {
 
-    companion object {
-        val differCallback = object : DiffUtil.ItemCallback<Product>() {
-            override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
-                return oldItem.id == oldItem.id
-            }
+class MainAdapter : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
-            override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
-                return oldItem == newItem
-            }
-        }
+    private var productList: List<Product> = emptyList()
+
+    fun submitList(newList: List<Product>) {
+        val diffResult = DiffUtil.calculateDiff(ProductDiffCallback(productList, newList))
+        productList = newList
+        diffResult.dispatchUpdatesTo(this)
     }
 
-    override fun onBindViewHolder(holder: MainAdapter.ViewHolder, position: Int) {
-        holder.bind(getItem(position)!!)
-        holder.setIsRecyclable(false)
-
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemProductBinding.inflate(inflater, parent, false)
         return ViewHolder(binding)
     }
 
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(productList[position])
+    }
+
+    override fun getItemCount(): Int = productList.size
+
     inner class ViewHolder(private val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root) {
-
-        init {
-            binding.buttonNext.setOnClickListener {
-                val position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    val product = getItem(position)
-                    product?.let { MainFragment.clickProduct(it) }
-                }
-            }
-        }
-
         fun bind(item: Product) {
             binding.apply {
                 tvName.text = item.title
@@ -72,8 +50,12 @@ class MainAdapter
                     .load(item.thumbnail)
                     .placeholder(R.drawable.ic_launcher_background)
                     .into(imageItem)
+
+                buttonNext.setOnClickListener {
+                    MainFragment.clickProduct(productList[position])
+                }
+
             }
         }
     }
-
 }

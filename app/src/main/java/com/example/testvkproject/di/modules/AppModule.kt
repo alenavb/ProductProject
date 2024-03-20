@@ -1,4 +1,4 @@
-package com.example.testvkproject.di
+package com.example.testvkproject.di.modules
 
 import android.app.Application
 import android.content.Context

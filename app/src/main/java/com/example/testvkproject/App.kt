@@ -1,8 +1,8 @@
 package com.example.testvkproject
 
 import android.app.Application
-import com.example.testvkproject.di.AppComponent
-import com.example.testvkproject.di.DaggerAppComponent
+import com.example.testvkproject.di.component.AppComponent
+import com.example.testvkproject.di.component.DaggerAppComponent
 
 open class App : Application() {
 

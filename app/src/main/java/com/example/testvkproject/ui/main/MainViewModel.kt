@@ -1,45 +1,83 @@
 package com.example.testvkproject.ui.main
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.cachedIn
-import com.example.testvkproject.data.remote.RetrofitInstance
-import com.example.testvkproject.data.repository.ProductsRepositoryImpl
-import com.example.testvkproject.domain.ModelProduct
-import com.example.testvkproject.paging.ProductsPagingSource
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.example.testvkproject.data.repository.ProductRepository
+import com.example.testvkproject.domain.Product
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.launch
-import retrofit2.Response
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import javax.inject.Inject
+import javax.inject.Provider
 
-class MainViewModel @AssistedInject constructor(application: Application)
-    : AndroidViewModel(application) {
-    private val repo: ProductsRepositoryImpl
+class MainViewModel @Inject constructor(
+    private val productRepository: ProductRepository
+) : ViewModel() {
 
-    val myProductSearch: MutableLiveData<Response<ModelProduct>> = MutableLiveData()
+    private val disposables = CompositeDisposable()
+    val productsLiveData = MutableLiveData<List<Product>>()
+    val searchLiveData = MutableLiveData<List<Product>>()
+    val isLoadingError = MutableLiveData<Boolean>(false)
+
+    private var currentPage = 0
 
     init {
-        val api = RetrofitInstance.api
-        repo = ProductsRepositoryImpl(api)
+        loadInitialProducts()
     }
 
-    val productsList = Pager(PagingConfig(pageSize = 100)) {
-        ProductsPagingSource(repo)
-    }.flow.cachedIn(viewModelScope)
+    fun loadInitialProducts() {
+        getAllProducts(0)
+    }
+
+    fun loadNextPage() {
+        getAllProducts(currentPage + 1)
+
+    }
+
+    private fun getAllProducts(page: Int) {
+        disposables.add(
+            productRepository.getAllProducts(page * 2, 100)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ response ->
+                    if (response.isSuccessful) {
+                        val newProducts = response.body()?.products ?: emptyList()
+                        val currentProducts = productsLiveData.value ?: emptyList()
+                        productsLiveData.value = currentProducts + newProducts
+                        isLoadingError.postValue(false)
+                        currentPage += 1
+                    } else {
+                        isLoadingError.postValue(true)
+                    }
+                }, { error ->
+                    isLoadingError.postValue(true)
+                })
+        )
+    }
 
     fun searchProducts(query: String) {
-        viewModelScope.launch {
-            myProductSearch.value = repo.searchByTitle(query)
-        }
+        disposables.add(
+            productRepository.searchByTitle(query)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ response ->
+                    if (response.isSuccessful) {
+                        val foundProducts = response.body()?.products ?: emptyList()
+                        searchLiveData.postValue(foundProducts)
+                    } else {
+                        searchLiveData.postValue(emptyList())
+                    }
+                }, { error ->
+                    searchLiveData.postValue(emptyList())
+                })
+        )
     }
 
-
-    @AssistedFactory
-    interface Factory {
-        fun create(): MainViewModel
+    override fun onCleared() {
+        super.onCleared()
+        disposables.clear()
     }
 }
