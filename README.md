@@ -1,4 +1,4 @@
-## TestVKProject
+## ProductProject
 
 Приложение, отображающее вывод товаров из сети.
 
