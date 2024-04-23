@@ -25,7 +25,7 @@ class MainAdapter
     companion object {
         val differCallback = object : DiffUtil.ItemCallback<Product>() {
             override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
-                return oldItem.id == oldItem.id
+                return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
@@ -36,9 +36,9 @@ class MainAdapter
 
     override fun onBindViewHolder(holder: MainAdapter.ViewHolder, position: Int) {
         holder.bind(getItem(position)!!)
-        holder.setIsRecyclable(false)
 
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainAdapter.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)

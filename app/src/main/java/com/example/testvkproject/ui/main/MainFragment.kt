@@ -27,7 +27,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private lateinit var mBind: FragmentMainBinding
     lateinit var adapter : MainAdapter
-    lateinit var searchAdapter : SearchAdapter
+    lateinit var searchAdapter: SearchAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
