@@ -7,7 +7,7 @@ import android.widget.LinearLayout
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.example.testvkproject.NetworkConnection
+import com.example.testvkproject.ui.utils.NetworkConnection
 import com.example.testvkproject.R
 import com.example.testvkproject.ui.utils.appComponent
 

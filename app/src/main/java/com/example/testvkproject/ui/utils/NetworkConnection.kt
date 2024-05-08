@@ -1,4 +1,4 @@
-package com.example.testvkproject
+package com.example.testvkproject.ui.utils
 
 import android.annotation.TargetApi
 import android.content.BroadcastReceiver

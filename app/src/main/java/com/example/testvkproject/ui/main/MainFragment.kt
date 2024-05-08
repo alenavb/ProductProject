@@ -39,7 +39,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         super.onViewCreated(view, savedInstanceState)
         mBind = FragmentMainBinding.bind(view)
         adapter = MainAdapter(requireActivity().supportFragmentManager)
-        searchAdapter = SearchAdapter()
+        searchAdapter = SearchAdapter(requireActivity().supportFragmentManager)
+
         setupRecyclerView()
         observeProducts()
 
@@ -69,8 +70,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             observeProducts()
             false
         }
-
-
 
     }
 

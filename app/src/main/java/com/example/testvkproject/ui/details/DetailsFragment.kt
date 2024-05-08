@@ -14,7 +14,8 @@ import com.example.testvkproject.ui.utils.appComponent
 class DetailsFragment : Fragment(R.layout.fragment_details) {
 
     private lateinit var mBind: FragmentDetailsBinding
-    lateinit var currentProduct: Product
+    private var currentProduct: Product? = null
+    private var searchProducts: Product? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,7 +23,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         savedInstanceState: Bundle?
     ): View {
         mBind = FragmentDetailsBinding.inflate(layoutInflater, container, false)
-        currentProduct = arguments?.getSerializable("product") as Product
+        currentProduct = arguments?.getSerializable("product") as? Product
+        searchProducts = arguments?.getSerializable("productSearch") as? Product
 
         return mBind.root
     }
@@ -37,22 +39,32 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     }
 
     private fun init() {
-        Glide.with(this)
-            .load(currentProduct.thumbnail)
-            .fitCenter()
-            .into(mBind.imgDetailed)
+        currentProduct?.let { product ->
+            Glide.with(this)
+                .load(product.thumbnail)
+                .fitCenter()
+                .into(mBind.imgDetailed)
 
-        val price = "${currentProduct.price.toString()} $"
+            val price = "${product.price.toString()} $"
 
-        mBind.tvTitleDetailed.text = currentProduct.title
-        mBind.tvCategoryDetailed.text = currentProduct.category
-        mBind.tvDescriptionDetailed.text = currentProduct.description
-        mBind.tvPriceDetailed.text = price
+            mBind.tvTitleDetailed.text = product.title
+            mBind.tvCategoryDetailed.text = product.category
+            mBind.tvDescriptionDetailed.text = product.description
+            mBind.tvPriceDetailed.text = price
+        }
 
-        if (currentProduct == null) {
-            mBind.includeNoSignal.linearNoInternet.visibility = View.VISIBLE
-        } else {
-            mBind.includeNoSignal.linearNoInternet.visibility = View.GONE
+        searchProducts?.let { product ->
+            Glide.with(this)
+                .load(product.thumbnail)
+                .fitCenter()
+                .into(mBind.imgDetailed)
+
+            val price = "${product.price.toString()} $"
+
+            mBind.tvTitleDetailed.text = product.title
+            mBind.tvCategoryDetailed.text = product.category
+            mBind.tvDescriptionDetailed.text = product.description
+            mBind.tvPriceDetailed.text = price
         }
     }
 }

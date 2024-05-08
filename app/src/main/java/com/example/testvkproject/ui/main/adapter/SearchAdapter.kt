@@ -1,18 +1,20 @@
 package com.example.testvkproject.ui.main.adapter
 
+import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.testvkproject.R
 import com.example.testvkproject.domain.model.Product
-import com.example.testvkproject.ui.main.MainFragment
+import com.example.testvkproject.ui.details.DetailsFragment
 
-class SearchAdapter: RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
+class SearchAdapter(private val fragmentManager: FragmentManager): RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
 
 
     private var listProducts = emptyList<Product>()
@@ -45,6 +47,18 @@ class SearchAdapter: RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
             text = listProducts[position].description
             ellipsize = TextUtils.TruncateAt.END
             maxLines = 2
+        }
+        holder.buttonNext.setOnClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("productSearch", listProducts[position])
+            }
+            val detailsFragment = DetailsFragment().apply {
+                arguments = bundle
+            }
+            fragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerView, detailsFragment)
+                .addToBackStack(null)
+                .commit()
         }
 
     }
