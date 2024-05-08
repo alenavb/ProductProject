@@ -1,4 +1,4 @@
-package com.example.testvkproject.domain
+package com.example.testvkproject.domain.model
 
 data class ModelProduct(
     val limit: Int,

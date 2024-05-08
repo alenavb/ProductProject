@@ -5,12 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.example.testvkproject.MAIN
 import com.example.testvkproject.R
 import com.example.testvkproject.databinding.FragmentDetailsBinding
-import com.example.testvkproject.domain.Product
+import com.example.testvkproject.domain.model.Product
 import com.example.testvkproject.ui.utils.appComponent
 
 class DetailsFragment : Fragment(R.layout.fragment_details) {
@@ -24,7 +22,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         savedInstanceState: Bundle?
     ): View {
         mBind = FragmentDetailsBinding.inflate(layoutInflater, container, false)
-        currentProduct = arguments?.getSerializable("getProduct") as Product
+        currentProduct = arguments?.getSerializable("product") as Product
+
         return mBind.root
     }
 
@@ -38,7 +37,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     }
 
     private fun init() {
-        Glide.with(MAIN)
+        Glide.with(this)
             .load(currentProduct.thumbnail)
             .fitCenter()
             .into(mBind.imgDetailed)

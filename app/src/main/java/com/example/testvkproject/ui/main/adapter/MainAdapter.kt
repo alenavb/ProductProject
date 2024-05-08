@@ -1,25 +1,21 @@
 package com.example.testvkproject.ui.main.adapter
 
-import android.annotation.SuppressLint
-import android.content.Context
+import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.widget.AppCompatButton
-import androidx.paging.LoadState
+import androidx.fragment.app.FragmentManager
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.testvkproject.MAIN
 import com.example.testvkproject.R
 import com.example.testvkproject.databinding.ItemProductBinding
-import com.example.testvkproject.domain.Product
+import com.example.testvkproject.domain.model.Product
+import com.example.testvkproject.ui.details.DetailsFragment
 import com.example.testvkproject.ui.main.MainFragment
 
-class MainAdapter
+class MainAdapter(private val fragmentManager: FragmentManager)
     : PagingDataAdapter<Product, MainAdapter.ViewHolder>(differCallback) {
 
     companion object {
@@ -53,7 +49,18 @@ class MainAdapter
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val product = getItem(position)
-                    product?.let { MainFragment.clickProduct(it) }
+                    product?.let {
+                        val bundle = Bundle().apply {
+                            putSerializable("product", it)
+                        }
+                        val detailsFragment = DetailsFragment().apply {
+                            arguments = bundle
+                        }
+                        fragmentManager.beginTransaction()
+                            .replace(R.id.fragmentContainerView, detailsFragment)
+                            .addToBackStack(null)
+                            .commit()
+                    }
                 }
             }
         }

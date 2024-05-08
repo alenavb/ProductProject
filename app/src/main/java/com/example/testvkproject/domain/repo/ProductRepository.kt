@@ -1,8 +1,7 @@
-package com.example.testvkproject.data.repository
+package com.example.testvkproject.domain.repo
 
-import com.example.testvkproject.domain.ModelProduct
+import com.example.testvkproject.domain.model.ModelProduct
 import retrofit2.Response
-import retrofit2.http.Path
 
 
 interface ProductRepository {

@@ -1,12 +1,9 @@
 package com.example.testvkproject.data.repository
 
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.testvkproject.data.remote.RemoteApi
-import com.example.testvkproject.domain.ModelProduct
-import retrofit2.HttpException
+import com.example.testvkproject.domain.model.ModelProduct
+import com.example.testvkproject.domain.repo.ProductRepository
 import retrofit2.Response
-import java.io.IOException
 import javax.inject.Inject
 
 

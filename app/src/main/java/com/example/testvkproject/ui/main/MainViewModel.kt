@@ -9,7 +9,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.example.testvkproject.data.remote.RetrofitInstance
 import com.example.testvkproject.data.repository.ProductsRepositoryImpl
-import com.example.testvkproject.domain.ModelProduct
+import com.example.testvkproject.domain.model.ModelProduct
 import com.example.testvkproject.paging.ProductsPagingSource
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject

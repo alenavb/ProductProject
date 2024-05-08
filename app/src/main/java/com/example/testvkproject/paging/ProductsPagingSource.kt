@@ -4,7 +4,7 @@ import android.content.res.Resources
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.testvkproject.data.repository.ProductsRepositoryImpl
-import com.example.testvkproject.domain.Product
+import com.example.testvkproject.domain.model.Product
 import retrofit2.HttpException
 
 class ProductsPagingSource(
@@ -30,12 +30,7 @@ class ProductsPagingSource(
                 throw HttpException(response)
             }
         } catch (exception: HttpException) {
-            when (exception.code()) {
-                404, 401 -> LoadResult.Error(Resources.NotFoundException("Список товаров не найден"))
-                else -> LoadResult.Error(exception)
-            }
-        } catch (e: Exception) {
-            LoadResult.Error(e)
+            LoadResult.Error(exception)
         }
     }
 

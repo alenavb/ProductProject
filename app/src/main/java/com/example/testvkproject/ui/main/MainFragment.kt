@@ -1,6 +1,5 @@
 package com.example.testvkproject.ui.main
 
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.testvkproject.MAIN
 import com.example.testvkproject.R
 import com.example.testvkproject.databinding.FragmentMainBinding
-import com.example.testvkproject.domain.Product
 import com.example.testvkproject.ui.utils.appComponent
 import com.example.testvkproject.ui.main.adapter.MainAdapter
 import com.example.testvkproject.ui.main.adapter.SearchAdapter
@@ -41,13 +38,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBind = FragmentMainBinding.bind(view)
-        adapter = MainAdapter()
+        adapter = MainAdapter(requireActivity().supportFragmentManager)
         searchAdapter = SearchAdapter()
         setupRecyclerView()
         observeProducts()
 
         adapter.addLoadStateListener { loadState ->
-            mBind.includeNoSignal.linearNoInternet.isVisible = loadState.refresh is LoadState.Error
             mBind.recyclerView.isVisible = loadState.source.refresh is LoadState.NotLoading
             mBind.prgBarMovies.isVisible = loadState.source.refresh is LoadState.Loading
         }
@@ -73,6 +69,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             observeProducts()
             false
         }
+
+
+
     }
 
     private fun loadProducts(query: String) {
@@ -117,12 +116,4 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         requireContext().appComponent().inject(this)
     }
 
-
-    companion object {
-        fun clickProduct(model: Product) {
-            val bundle = Bundle()
-            bundle.putSerializable("getProduct", model)
-            MAIN.navController.navigate(R.id.action_mainFragment_to_detailsFragment, bundle)
-        }
-    }
 }

@@ -6,15 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
-import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.testvkproject.MAIN
 import com.example.testvkproject.R
-import com.example.testvkproject.databinding.ItemProductBinding
-import com.example.testvkproject.databinding.ItemProductSearchBinding
-import com.example.testvkproject.domain.Product
+import com.example.testvkproject.domain.model.Product
 import com.example.testvkproject.ui.main.MainFragment
 
 class SearchAdapter: RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
@@ -35,7 +30,7 @@ class SearchAdapter: RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-        Glide.with(MAIN)
+        Glide.with(holder.itemView.context)
             .load(listProducts[position].thumbnail)
             .placeholder(R.drawable.ic_launcher_background)
             .into(holder.itemView.findViewById(R.id.imageItem))
@@ -52,9 +47,6 @@ class SearchAdapter: RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
             maxLines = 2
         }
 
-        holder.buttonNext.setOnClickListener {
-            MainFragment.clickProduct(listProducts[position])
-        }
     }
 
     override fun getItemCount(): Int {

@@ -1,6 +1,6 @@
 package com.example.testvkproject.di
 
-import com.example.testvkproject.data.repository.ProductRepository
+import com.example.testvkproject.domain.repo.ProductRepository
 import com.example.testvkproject.data.repository.ProductsRepositoryImpl
 import dagger.Binds
 import dagger.Module

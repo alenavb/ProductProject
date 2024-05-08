@@ -7,14 +7,6 @@
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <include
-        android:id="@+id/includeNoSignal"
-        layout="@layout/xml_no_internet"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
-
-
 
     <SearchView
         android:id="@+id/searchVIew"
