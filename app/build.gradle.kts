@@ -41,7 +41,10 @@ android {
 }
 
 dependencies {
-    //Glide
+    implementation(project(":remote"))
+    implementation(project(":feature:main-list"))
+    implementation(project(":feature:details-info"))
+
     implementation("com.github.bumptech.glide:glide:4.15.0")
     implementation("com.google.android.datatransport:transport-runtime:3.2.0")
     implementation("com.google.firebase:firebase-inappmessaging-display-ktx:20.4.0")

@@ -17,4 +17,7 @@ rootProject.name = "TestVKProject"
 include(":app")
 
 
- 
+include(":remote")
+include(":feature")
+include(":feature:main-list")
+include(":feature:details-info")

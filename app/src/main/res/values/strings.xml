@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TestVKProject</string>
+    <string name="app_name">TestMultiModuleProject</string>
 
     <!--fragment_main-->
     <string name="tv_no_internet">Нет подключения к интернету</string>
